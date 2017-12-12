@@ -2,13 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <p>
-      app Works!
-    </p>
-  `,
-  styles: []
+  template: `<h3>Angular Web Sockets Client</h3>
+  <quotes></quotes>`,
 })
-export class AppComponent {
-  title = 'app';
+export class AppComponent  { 
+  name = 'Angular'; 
 }
