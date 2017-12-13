@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Observable} from "rxjs/Observable";
+import {WebsocketService} from "./websocket.service";
 
 @Component({
   selector: 'quotes',
@@ -28,21 +30,30 @@ export class QuotesComponent  {
   statusText: string[] = ['Closed', 'Open'];
   url: string = 'ws://localhost:4000';
 
-  constructor(){}
+  constructor(private webSocketService: WebsocketService){}
 
   startWebsocketCommunications(){
-    // add code here
-    alert('not implemented yet');
+    let obs: Observable<{}> = this.webSocketService.getMessages();
+    this.status = 1;
+    obs.subscribe((msg: string) => {
+      console.log("msg: " + msg);
+      this.quotes.push(JSON.parse(msg));
+    });
   }
 
   stopWebsocketCommunications(){
-    // add code here
-    alert('not implemented yet');
+    this.webSocketService.stopMessages();
+    this.status = 0;
   }
 
   resetMessages(){
-    // add code here
-    alert('not implemented yet');
+    if(this.status === 1) {
+      this.webSocketService.stopMessages();
+      this.quotes = [];
+    }
+    else {
+      this.quotes = [];
+    }
   }
 
 }
